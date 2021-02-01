@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(){
 
         viewModel=ViewModelProvider(this,viewModelFactory).get(ApiViewModel::class.java)
 
-        viewModel.getTopTag("tag.getTopTags",API_KEY,FORMAT)
+        viewModel.getTopTag(API_KEY)
 
         viewModel.apiResponse.observe(
             this, Observer {
