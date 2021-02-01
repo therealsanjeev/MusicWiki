@@ -6,32 +6,56 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.therealsanjeev.musicwiki.adpter.genresAdapter
+import com.therealsanjeev.musicwiki.model.recycleview.genres
 import com.therealsanjeev.musicwiki.repo.Repository
 import com.therealsanjeev.musicwiki.utils.Constants.Companion.API_KEY
 import com.therealsanjeev.musicwiki.utils.Constants.Companion.FORMAT
 import com.therealsanjeev.musicwiki.views.ApiViewModel
 import com.therealsanjeev.musicwiki.views.ApiViewModelFactory
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(){
 
     private lateinit var viewModel: ApiViewModel
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerAdapter:genresAdapter
+    private var responseList= ArrayList<genres>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //recycleView
+        recyclerView=recycle_view
+        recyclerAdapter= genresAdapter(responseList)
+
+        val layoutManager=LinearLayoutManager(applicationContext)
+        recyclerView.layoutManager=layoutManager
+        recyclerView.adapter=recyclerAdapter
+
+        //viewModel
         val repo=Repository()
         val viewModelFactory=ApiViewModelFactory(repo)
-
         viewModel=ViewModelProvider(this,viewModelFactory).get(ApiViewModel::class.java)
 
-        viewModel.getTopTag(API_KEY)
-
+        val method="tag.getTopTags"
+        viewModel.getData_All(method)
         viewModel.apiResponse.observe(
             this, Observer {
+
                 if (it.isSuccessful) {
                     Log.d("RESPONSE", "Getting the response body: ${it.body()}")
-                    Log.d("RESPONSE", "Getting the response tags: ${it.code()}")
+                    for (element in it.body()!!.toptags.tag){
+                        Log.d("RESPONSE", "Getting the response body: ${element.name}")
+                        val item=genres(element.name)
+                        responseList.add(item)
+                    }
 
                 } else {
                     Log.d("RESPONSE", "Getting the response errorbody: ${it.errorBody()}")

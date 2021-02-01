@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MusicWiki</string>
+    <string name="rock">ROCK</string>
+    <string name="musicwiki">musicwiki</string>
+    <string name="welcome">Welcome!</string>
+    <string name="choose_a_genre_to_start_with">Choose a genre to start with</string>
 </resources>

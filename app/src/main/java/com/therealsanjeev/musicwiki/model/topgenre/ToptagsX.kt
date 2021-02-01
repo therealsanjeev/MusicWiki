@@ -1,4 +1,4 @@
-package com.therealsanjeev.musicwiki.model
+package com.therealsanjeev.musicwiki.model.topgenre
 
 import com.google.gson.annotations.SerializedName
 
