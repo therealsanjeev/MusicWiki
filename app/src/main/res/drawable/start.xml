@@ -4,6 +4,7 @@
     android:autoMirrored="true"
     android:viewportWidth="24.0"
     android:viewportHeight="24.0"
+    android:tint="@color/black"
     >
 
 

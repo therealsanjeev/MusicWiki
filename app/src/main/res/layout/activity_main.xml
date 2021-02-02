@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_width="wrap_content"
-            app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+            app:srcCompat="@drawable/start" />
 
     </LinearLayout>
 
