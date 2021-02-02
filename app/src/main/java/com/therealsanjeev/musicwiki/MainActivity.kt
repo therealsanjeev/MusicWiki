@@ -3,6 +3,8 @@ package com.therealsanjeev.musicwiki
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -26,18 +28,32 @@ class MainActivity : AppCompatActivity(){
     private lateinit var viewModel: ApiViewModel
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewTop10: RecyclerView
     private lateinit var recyclerAdapter:genresAdapter
+    private lateinit var recyclerAdapterTop:genresAdapter
     private var responseList= ArrayList<genres>()
+    private  var top10=ArrayList<genres>()
+
+    lateinit var btnExpend: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        btnExpend=btn_expend
 
         //recycleView
         recyclerView=recycle_view
         recyclerAdapter= genresAdapter(responseList)
         recyclerView.layoutManager=GridLayoutManager(applicationContext,3)
         recyclerView.adapter=recyclerAdapter
+
+
+        recyclerViewTop10=recycle_view_top
+        recyclerAdapterTop= genresAdapter(top10)
+        recyclerViewTop10.layoutManager=GridLayoutManager(applicationContext,3)
+        recyclerViewTop10.adapter=recyclerAdapterTop
+
 
         //viewModel
         val repo=Repository()
@@ -55,10 +71,21 @@ class MainActivity : AppCompatActivity(){
                     for (element in it.body()!!.toptags.tag) {
                         Log.d("RESPONSE", "Getting the response body: ${element.name}")
                         val item = genres(element.name)
-                        
+
                         responseList.add(item)
-                        Toast.makeText(this, "${element.name}", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "${element.name}", Toast.LENGTH_SHORT).show()
                     }
+
+                    var i = 0
+                    for (it in responseList) {
+                        top10.add(it)
+                        i++
+                        if (i == 10)
+                            break
+                    }
+
+                    recyclerAdapter.notifyDataSetChanged()
+                    recyclerAdapterTop.notifyDataSetChanged()
 
                     Toast.makeText(this, "Finished!!!", Toast.LENGTH_SHORT).show()
 
@@ -68,6 +95,10 @@ class MainActivity : AppCompatActivity(){
             }
         )
 
+        btnExpend.setOnClickListener {
+            recyclerView.visibility=View.VISIBLE
+            recyclerViewTop10.visibility=View.GONE
+        }
 
 
     }

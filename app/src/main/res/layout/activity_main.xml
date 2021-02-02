@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.AppCompatImageView
             android:adjustViewBounds="true"
-            android:id="@+id/headerIndicator"
+            android:id="@+id/btn_expend"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_width="wrap_content"
@@ -53,6 +53,11 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
