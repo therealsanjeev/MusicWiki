@@ -43,15 +43,17 @@ class MainActivity : AppCompatActivity(){
 
         //recycleView
         recyclerView=recycle_view
-        recyclerAdapter= genresAdapter(responseList)
+        recyclerAdapter= genresAdapter(this,responseList)
         recyclerView.layoutManager=GridLayoutManager(applicationContext, 3)
         recyclerView.adapter=recyclerAdapter
 
 
         recyclerViewTop10=recycle_view_top
-        recyclerAdapterTop= genresAdapter(top10)
+        recyclerAdapterTop= genresAdapter(this,top10)
         recyclerViewTop10.layoutManager=GridLayoutManager(applicationContext, 3)
         recyclerViewTop10.adapter=recyclerAdapterTop
+
+
 
 
         //viewModel
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity(){
         viewModel=ViewModelProvider(this, viewModelFactory).get(ApiViewModel::class.java)
 
         val method="tag.getTopTags"
-        viewModel.getData_All(method)
+        viewModel.getDataAllVM(method)
         viewModel.apiResponse.observe(
             this, Observer {
 
@@ -69,8 +71,7 @@ class MainActivity : AppCompatActivity(){
 //                    Log.d("RESPONSE", "Getting the response body: ${it.body()}")
                     for (element in it.body()!!.toptags.tag) {
 //                        Log.d("RESPONSE", "Getting the response body: ${element.name}")
-                        val item = genres(element.name)
-
+                        val item = genres(element.name.toUpperCase())
                         responseList.add(item)
 //                        Toast.makeText(this, "${element.name}", Toast.LENGTH_SHORT).show()
                     }
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity(){
                     recyclerAdapter.notifyDataSetChanged()
                     recyclerAdapterTop.notifyDataSetChanged()
 
-                    Toast.makeText(this, "Finished!!!", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Finished!!!", Toast.LENGTH_SHORT).show()
 
                 } else {
                     Log.d("RESPONSE", "Getting the response errorbody: ${it.errorBody()}")
@@ -97,9 +98,10 @@ class MainActivity : AppCompatActivity(){
             getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         } else {
             TODO("VERSION.SDK_INT < M")
+
         }
         btnExpend.setOnClickListener {
-            vibe.vibrate(100);
+            vibe.vibrate(50);
             if(!flag){
                 recyclerView.visibility=View.VISIBLE
                 recyclerViewTop10.visibility=View.GONE
