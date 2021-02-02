@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     tools:context=".genre_details">
     <ImageButton
+        android:layout_marginTop="20dp"
         android:id="@+id/back_btn"
         android:background="@drawable/back"
         android:layout_width="wrap_content"
@@ -17,6 +20,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
+            android:id="@+id/tag_name"
             android:layout_marginTop="50dp"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -30,8 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:text=""
-                android:textSize="16dp"
+                android:id="@+id/tag_summary"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </ScrollView>
@@ -40,6 +44,7 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
+
 
     </LinearLayout>
 

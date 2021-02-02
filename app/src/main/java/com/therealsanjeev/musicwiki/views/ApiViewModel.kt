@@ -23,7 +23,9 @@ class ApiViewModel(val repository: Repository): ViewModel() {
     var tagInfoResponse:MutableLiveData<Response<tagInfo>> = MutableLiveData()
     fun getTagInfoVM(tag:String){
         viewModelScope.launch {
+
             val response=repository.getTagInfoRepo(tag, API_KEY)
+            tagInfoResponse.value=response
         }
     }
 }
