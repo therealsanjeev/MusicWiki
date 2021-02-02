@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.single_item_layout.view.*
 class genresAdapter(private var tags:List<genres>): RecyclerView.Adapter<genresAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View):RecyclerView.ViewHolder(view) {
-
         var tagName=view.tag_name
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -21,7 +20,6 @@ class genresAdapter(private var tags:List<genres>): RecyclerView.Adapter<genresA
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
         val response=tags[position]
         holder.tagName.text=response.name
     }
@@ -29,5 +27,4 @@ class genresAdapter(private var tags:List<genres>): RecyclerView.Adapter<genresA
     override fun getItemCount(): Int {
         return tags.size
     }
-
 }

@@ -18,7 +18,8 @@ import com.therealsanjeev.musicwiki.utils.Constants.Companion.FORMAT
 import com.therealsanjeev.musicwiki.views.ApiViewModel
 import com.therealsanjeev.musicwiki.views.ApiViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.ArrayList
+
+
 
 class MainActivity : AppCompatActivity(){
 
@@ -35,9 +36,7 @@ class MainActivity : AppCompatActivity(){
         //recycleView
         recyclerView=recycle_view
         recyclerAdapter= genresAdapter(responseList)
-
-        val layoutManager=GridLayoutManager(applicationContext,3)
-        recyclerView.layoutManager=layoutManager
+        recyclerView.layoutManager=GridLayoutManager(applicationContext,3)
         recyclerView.adapter=recyclerAdapter
 
         //viewModel
@@ -51,12 +50,16 @@ class MainActivity : AppCompatActivity(){
             this, Observer {
 
                 if (it.isSuccessful) {
+
                     Log.d("RESPONSE", "Getting the response body: ${it.body()}")
                     for (element in it.body()!!.toptags.tag) {
                         Log.d("RESPONSE", "Getting the response body: ${element.name}")
                         val item = genres(element.name)
+                        
                         responseList.add(item)
+                        Toast.makeText(this, "${element.name}", Toast.LENGTH_SHORT).show()
                     }
+
                     Toast.makeText(this, "Finished!!!", Toast.LENGTH_SHORT).show()
 
                 } else {
@@ -64,6 +67,8 @@ class MainActivity : AppCompatActivity(){
                 }
             }
         )
+
+
 
     }
 }
