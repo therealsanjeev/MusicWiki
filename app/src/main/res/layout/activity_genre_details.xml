@@ -21,7 +21,7 @@
         android:layout_weight="1">
         <TextView
             android:id="@+id/tag_name"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="40sp"
@@ -43,7 +43,28 @@
     <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:orientation="vertical">
+        <com.google.android.material.appbar.AppBarLayout
+            android:backgroundTint="@color/black"
+            android:background="@drawable/back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabSelectedTextColor="@color/black"
+                app:tabGravity="fill"
+                app:tabMode="fixed" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
     </LinearLayout>

@@ -4,4 +4,8 @@
     <string name="musicwiki">musicwiki</string>
     <string name="welcome">Welcome!</string>
     <string name="choose_a_genre_to_start_with">Choose a genre to start with</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
 </resources>
