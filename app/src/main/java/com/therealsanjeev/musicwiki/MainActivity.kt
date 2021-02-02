@@ -3,6 +3,7 @@ package com.therealsanjeev.musicwiki
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity(){
         recyclerView=recycle_view
         recyclerAdapter= genresAdapter(responseList)
 
-        val layoutManager=LinearLayoutManager(applicationContext)
+        val layoutManager=GridLayoutManager(applicationContext,3)
         recyclerView.layoutManager=layoutManager
         recyclerView.adapter=recyclerAdapter
 
@@ -51,11 +52,12 @@ class MainActivity : AppCompatActivity(){
 
                 if (it.isSuccessful) {
                     Log.d("RESPONSE", "Getting the response body: ${it.body()}")
-                    for (element in it.body()!!.toptags.tag){
+                    for (element in it.body()!!.toptags.tag) {
                         Log.d("RESPONSE", "Getting the response body: ${element.name}")
-                        val item=genres(element.name)
+                        val item = genres(element.name)
                         responseList.add(item)
                     }
+                    Toast.makeText(this, "Finished!!!", Toast.LENGTH_SHORT).show()
 
                 } else {
                     Log.d("RESPONSE", "Getting the response errorbody: ${it.errorBody()}")

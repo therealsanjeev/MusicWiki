@@ -23,7 +23,7 @@ class genresAdapter(private var tags:List<genres>): RecyclerView.Adapter<genresA
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val response=tags[position]
-        holder.tagName.text=response.tag
+        holder.tagName.text=response.name
     }
 
     override fun getItemCount(): Int {
