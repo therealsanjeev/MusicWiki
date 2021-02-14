@@ -7,6 +7,7 @@ import com.therealsanjeev.musicwiki.model.album.albums
 import com.therealsanjeev.musicwiki.model.artists.artists
 import com.therealsanjeev.musicwiki.model.taginfo.tagInfo
 import com.therealsanjeev.musicwiki.model.topgenre.Toptags
+import com.therealsanjeev.musicwiki.model.tracks.tracks
 import com.therealsanjeev.musicwiki.repo.Repository
 import com.therealsanjeev.musicwiki.utils.Constants.Companion.API_KEY
 import kotlinx.coroutines.launch
@@ -46,6 +47,15 @@ class ApiViewModel(): ViewModel() {
         viewModelScope.launch {
             val response=tagRepo.getArtistRepo(artist, API_KEY)
             artistResponse.value=response
+        }
+
+    }
+
+    val trackResponse:MutableLiveData<Response<tracks>> = MutableLiveData()
+    fun getTrackVM(track:String){
+        viewModelScope.launch {
+            val response=tagRepo.getTrackRepo(track, API_KEY)
+            trackResponse.value=response
         }
 
     }
