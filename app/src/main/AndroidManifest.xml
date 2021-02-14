@@ -14,10 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicWiki"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GenreDetailActivity" android:parentActivityName=".MainActivity">
-
-        </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.ArtistActivity"></activity>
+        <activity android:name=".Activities.AlbumActiivity" />
+        <activity
+            android:name=".Activities.GenreDetailActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.therealsanjeev.musicwiki
+package com.therealsanjeev.musicwiki.Activities
 
 import android.os.Bundle
 import android.widget.ImageButton
@@ -10,18 +10,17 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
+import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.fragment.AlbumFragment
 import com.therealsanjeev.musicwiki.fragment.ArtistFragment
 import com.therealsanjeev.musicwiki.fragment.TrackFragment
-import com.therealsanjeev.musicwiki.repo.Repository
 import com.therealsanjeev.musicwiki.views.ApiViewModel
-import com.therealsanjeev.musicwiki.views.ApiViewModelFactory
 import kotlinx.android.synthetic.main.activity_genre_details.*
 
 class GenreDetailActivity : AppCompatActivity() {
-    private lateinit var backBtn:ImageButton
-    private lateinit var tagName:TextView
-    private lateinit var tagSummary:TextView
+    private lateinit var backBtn: ImageButton
+    private lateinit var tagName: TextView
+    private lateinit var tagSummary: TextView
 
     private lateinit var tagViewModel: ApiViewModel
 
@@ -36,7 +35,7 @@ class GenreDetailActivity : AppCompatActivity() {
         tagName.text=tag.toString()
 
 
-        tagViewModel=ViewModelProvider(this).get(ApiViewModel::class.java)
+        tagViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
 
         tagViewModel.getTagInfoVM(tag.toString())
         tagViewModel.tagInfoResponse.observe(

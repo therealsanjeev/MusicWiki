@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.therealsanjeev.musicwiki.R
-import com.therealsanjeev.musicwiki.GenreDetailActivity
+import com.therealsanjeev.musicwiki.Activities.GenreDetailActivity
 import com.therealsanjeev.musicwiki.model.recycleview.genres
 import kotlinx.android.synthetic.main.single_item_layout.view.*
 
