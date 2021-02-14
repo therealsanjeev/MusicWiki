@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    tools:context=".genre_details">
+    tools:context=".GenreDetailActivity">
     <ImageButton
         android:layout_marginTop="20dp"
         android:id="@+id/back_btn"

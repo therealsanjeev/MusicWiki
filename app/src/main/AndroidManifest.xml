@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicWiki"
         android:usesCleartextTraffic="true">
-        <activity android:name=".genre_details" android:parentActivityName=".MainActivity">
+        <activity android:name=".GenreDetailActivity" android:parentActivityName=".MainActivity">
 
         </activity>
         <activity android:name=".MainActivity">

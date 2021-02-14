@@ -1,5 +1,7 @@
 package com.therealsanjeev.musicwiki.network.api
 
+import com.therealsanjeev.musicwiki.model.album.albums
+import com.therealsanjeev.musicwiki.model.artists.artists
 import com.therealsanjeev.musicwiki.model.taginfo.tagInfo
 import com.therealsanjeev.musicwiki.model.topgenre.Toptags
 import retrofit2.Response
@@ -14,8 +16,11 @@ interface RestApi {
     @GET("?method=tag.getinfo&format=json")
     suspend fun getTagInfo(@Query("tag")tag:String,@Query("api_key")api_key: String):Response<tagInfo>
 
-    //not in use
-    @GET("?method=tag.getTopTags&format=json")
-    suspend fun getTopGenres11(@Query("api_key")api_key:String):Response<Toptags>
+    @GET("?method=album.search&format=json")
+    suspend fun getAlbums(@Query("album")album:String,@Query("api_key")api_key: String):Response<albums>
+
+    @GET("?method=artist.search&format=json")
+    suspend fun getArtists(@Query("artist")album:String,@Query("api_key")api_key: String):Response<artists>
+
 
 }

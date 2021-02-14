@@ -5,10 +5,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.therealsanjeev.musicwiki.R
-import com.therealsanjeev.musicwiki.genre_details
+import com.therealsanjeev.musicwiki.GenreDetailActivity
 import com.therealsanjeev.musicwiki.model.recycleview.genres
 import kotlinx.android.synthetic.main.single_item_layout.view.*
 
@@ -33,7 +32,7 @@ class genresAdapter(private val context: Context, private var tags: List<genres>
         holder.tagName.text=response.name
 
         holder.tagCardView.setOnClickListener {
-            val intent = Intent(context, genre_details::class.java).apply {
+            val intent = Intent(context, GenreDetailActivity::class.java).apply {
                 putExtra("tag", response.name)
             }
             context.startActivity(intent)

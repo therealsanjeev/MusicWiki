@@ -1,4 +1,4 @@
-package com.therealsanjeev.musicwiki
+ package com.therealsanjeev.musicwiki
 
 import android.content.Context
 import android.os.Bundle
@@ -54,8 +54,6 @@ class MainActivity : AppCompatActivity(){
         recyclerViewTop10.adapter=recyclerAdapterTop
 
 
-
-
         //viewModel
         val repo=Repository()
         val viewModelFactory=ApiViewModelFactory(repo)
@@ -68,12 +66,9 @@ class MainActivity : AppCompatActivity(){
 
                 if (it.isSuccessful) {
 
-//                    Log.d("RESPONSE", "Getting the response body: ${it.body()}")
                     for (element in it.body()!!.toptags.tag) {
-//                        Log.d("RESPONSE", "Getting the response body: ${element.name}")
                         val item = genres(element.name.toUpperCase())
                         responseList.add(item)
-//                        Toast.makeText(this, "${element.name}", Toast.LENGTH_SHORT).show()
                     }
 
                     var i = 0
@@ -83,12 +78,8 @@ class MainActivity : AppCompatActivity(){
                         if (i == 12)
                             break
                     }
-
                     recyclerAdapter.notifyDataSetChanged()
                     recyclerAdapterTop.notifyDataSetChanged()
-
-//                    Toast.makeText(this, "Finished!!!", Toast.LENGTH_SHORT).show()
-
                 } else {
                     Log.d("RESPONSE", "Getting the response errorbody: ${it.errorBody()}")
                 }
