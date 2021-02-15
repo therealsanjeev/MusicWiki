@@ -3,24 +3,20 @@ package com.therealsanjeev.musicwiki.Activities
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.therealsanjeev.musicwiki.R
-import com.therealsanjeev.musicwiki.adpter.albumAdapter
 import com.therealsanjeev.musicwiki.adpter.genresAdapter
-import com.therealsanjeev.musicwiki.adpter.trackAdapter
+import com.therealsanjeev.musicwiki.adpter.topAlbumsAdapter
+import com.therealsanjeev.musicwiki.adpter.topTracksAdapter
 import com.therealsanjeev.musicwiki.model.recycleview.album
 import com.therealsanjeev.musicwiki.model.recycleview.genres
 import com.therealsanjeev.musicwiki.model.recycleview.track
 import com.therealsanjeev.musicwiki.views.ApiViewModel
-import kotlinx.android.synthetic.main.activity_album_activity.*
 import kotlinx.android.synthetic.main.activity_artist_activity.*
-import kotlinx.android.synthetic.main.fragment_track.view.*
 
 class ArtistActivity : AppCompatActivity() {
 
@@ -38,12 +34,12 @@ class ArtistActivity : AppCompatActivity() {
 
     //topTracks
     private lateinit var recyclerViewTopTracks: RecyclerView
-    private lateinit var recyclerAdapterTopTracks: trackAdapter
+    private lateinit var recyclerAdapterTopTracks: topTracksAdapter
     private var responseListTopTracks= ArrayList<track>()
 
     //topAlbums
     private lateinit var recyclerViewTopAlbums: RecyclerView
-    private lateinit var recyclerAdapterTopAlbums: albumAdapter
+    private lateinit var recyclerAdapterTopAlbums: topAlbumsAdapter
     private var responseListTopAlbums= ArrayList<album>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,7 +149,7 @@ class ArtistActivity : AppCompatActivity() {
         //topTracks recyclerView
 
         recyclerViewTopTracks=topTracksRecyclerView
-        recyclerAdapterTopTracks= trackAdapter(this,responseListTopTracks)
+        recyclerAdapterTopTracks= topTracksAdapter(this,responseListTopTracks)
         recyclerViewTopTracks.layoutManager=   LinearLayoutManager(applicationContext,
             LinearLayoutManager.HORIZONTAL,false)
         recyclerViewTopTracks.adapter=recyclerAdapterTopTracks
@@ -161,7 +157,7 @@ class ArtistActivity : AppCompatActivity() {
         //topAlbum recyclerView
 
         recyclerViewTopAlbums=topAlbumsRecyclerView
-        recyclerAdapterTopAlbums= albumAdapter(this,responseListTopAlbums)
+        recyclerAdapterTopAlbums= topAlbumsAdapter(this,responseListTopAlbums)
         recyclerViewTopAlbums.layoutManager=   LinearLayoutManager(applicationContext,
             LinearLayoutManager.HORIZONTAL,false)
         recyclerViewTopAlbums.adapter=recyclerAdapterTopAlbums
