@@ -36,10 +36,12 @@ class AlbumActivity : AppCompatActivity() {
     private lateinit var albumName: TextView
     private lateinit var albumArtist: TextView
     private lateinit var wiki_summary: TextView
+    private lateinit var imageBg: ImageView
+
+    //recyclerView:
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: genresAdapter
     private var responseList= ArrayList<genres>()
-    private lateinit var imageBg: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,16 +49,7 @@ class AlbumActivity : AppCompatActivity() {
         setContentView(R.layout.activity_album_activity)
 
 
-        backBtn=back_btn_album
-        albumName=album_name
-        albumArtist=artist_name
-        recyclerView=recycle_view_album_details
-        imageBg=album_activity_bg
-        wiki_summary=album_summary
-
-        backBtn.setOnClickListener {
-            super.onBackPressed()
-        }
+        setter()
         val album = intent.getStringExtra("album")
         val artist = intent.getStringExtra("artist")
         Log.d("TAG", "onCreate: $album,$artist")
@@ -65,11 +58,10 @@ class AlbumActivity : AppCompatActivity() {
 
         recyclerView=recycle_view_album_details
         recyclerAdapter= genresAdapter(this, responseList)
-        recyclerView.layoutManager= LinearLayoutManager(applicationContext)
+        recyclerView.layoutManager= LinearLayoutManager(applicationContext,LinearLayoutManager.HORIZONTAL,true)
         recyclerView.adapter=recyclerAdapter
 
 
-//        album_summary.text="Yehh humari pawarriii ho rahi h"
 
         albumViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
         albumViewModel.getAlbumVM(album.toString(),artist.toString())
@@ -77,6 +69,11 @@ class AlbumActivity : AppCompatActivity() {
             if (response.isSuccessful){
                 val result=response.body()!!.album
 
+                for (element in result.tags.tag) {
+                    val item = genres(element.name.toUpperCase())
+                    responseList.add(item)
+                }
+                recyclerAdapter.notifyDataSetChanged()
                 Glide.with(this.applicationContext)
                     .load(result.image[4].text)
                     .error(R.drawable.imagebg)
@@ -98,16 +95,30 @@ class AlbumActivity : AppCompatActivity() {
         })
 
     }
+
+    private fun setter() {
+        backBtn=back_btn_album
+        albumName=album_name
+        albumArtist=artist_name
+        recyclerView=recycle_view_album_details
+        imageBg=album_activity_bg
+        wiki_summary=album_summary
+
+        backBtn.setOnClickListener {
+            super.onBackPressed()
+        }
+    }
+
     private fun removeTags(s: String) : String{
 
-        var a = 0
+        var target = 0
         for (i in s.indices) {
             if (s[i] == '<') {
-                a = i
+                target = i
                 break
             }
         }
-        return s.substring(0, a)
+        return s.substring(0, target)
     }
 
 

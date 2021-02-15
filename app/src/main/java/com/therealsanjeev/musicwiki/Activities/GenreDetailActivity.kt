@@ -42,7 +42,8 @@ class GenreDetailActivity : AppCompatActivity() {
         tagViewModel.tagInfoResponse.observe(
             this, Observer { response ->
                 if (response.isSuccessful) {
-                    tagSummary.text = response.body()!!.tag.wiki.summary
+                    val summary=response.body()!!.tag.wiki.summary
+                    tagSummary.text = removeTags(summary)
 
                 } else {
                     Toast.makeText(this, "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
@@ -85,6 +86,17 @@ class GenreDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun removeTags(s: String) : String{
+
+        var target = 0
+        for (i in s.indices) {
+            if (s[i] == '<') {
+                target = i
+                break
+            }
+        }
+        return s.substring(0, target)
+    }
     private fun setter() {
 
         backBtn=back_btn
