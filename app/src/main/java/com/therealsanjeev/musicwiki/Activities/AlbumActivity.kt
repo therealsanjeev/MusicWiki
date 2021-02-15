@@ -56,12 +56,6 @@ class AlbumActivity : AppCompatActivity() {
         albumName.text=album.toString()
         albumArtist.text=artist.toString()
 
-        recyclerView=recycle_view_album_details
-        recyclerAdapter= genresAdapter(this, responseList)
-        recyclerView.layoutManager= LinearLayoutManager(applicationContext,LinearLayoutManager.HORIZONTAL,true)
-        recyclerView.adapter=recyclerAdapter
-
-
 
         albumViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
         albumViewModel.getAlbumVM(album.toString(),artist.toString())
@@ -103,6 +97,12 @@ class AlbumActivity : AppCompatActivity() {
         recyclerView=recycle_view_album_details
         imageBg=album_activity_bg
         wiki_summary=album_summary
+
+        //recyclerView :
+        recyclerView=recycle_view_album_details
+        recyclerAdapter= genresAdapter(this, responseList)
+        recyclerView.layoutManager= LinearLayoutManager(applicationContext,LinearLayoutManager.HORIZONTAL,true)
+        recyclerView.adapter=recyclerAdapter
 
         backBtn.setOnClickListener {
             super.onBackPressed()

@@ -38,7 +38,7 @@ class artistAdapter(private val context: Context,private var artists: List<artis
         }
         holder.artistCardView.setOnClickListener {
             val intent = Intent(context, ArtistActivity::class.java).apply {
-                putExtra("tag", response.name)
+                putExtra("artist", response.name)
             }
             context.startActivity(intent)
         }
