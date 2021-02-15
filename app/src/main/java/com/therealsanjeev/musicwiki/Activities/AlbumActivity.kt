@@ -49,17 +49,21 @@ class AlbumActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_activity)
 
+        //progressbar :
         val progressBar = spin_kit as ProgressBar
         val doubleBounce: Sprite = ThreeBounce()
         progressBar.indeterminateDrawable = doubleBounce
+
         setter()
+
+        //getting data from intent:
         val album = intent.getStringExtra("album")
         val artist = intent.getStringExtra("artist")
         Log.d("TAG", "onCreate: $album,$artist")
         albumName.text=album.toString()
         albumArtist.text=artist.toString()
 
-
+        //accessing ViewModel :
         albumViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
         albumViewModel.getAlbumVM(album.toString(),artist.toString())
         albumViewModel.albumResponse.observe(this, Observer { response ->
@@ -95,9 +99,6 @@ class AlbumActivity : AppCompatActivity() {
     }
 
     private fun setter() {
-
-
-
         backBtn=back_btn_album
         albumName=album_name
         albumArtist=artist_name

@@ -32,12 +32,12 @@ class GenreDetailActivity : AppCompatActivity() {
 
         setter()
 
+        //getting data from Intent :
         val tag = intent.getStringExtra("tag")
         tagName.text=tag.toString()
 
-
+        //accessing ViewModel :
         tagViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
-
         tagViewModel.getTagInfoVM(tag.toString())
         tagViewModel.tagInfoResponse.observe(
             this, Observer { response ->

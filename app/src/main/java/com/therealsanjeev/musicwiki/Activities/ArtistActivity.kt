@@ -51,13 +51,18 @@ class ArtistActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_artist_activity)
-        setter()
-        val artist = intent.getStringExtra("artist")
-        artistName.text=artist.toString()
+        // progressBar :
         val progressBar = spin_kit as ProgressBar
         val doubleBounce: Sprite = ThreeBounce()
         progressBar.indeterminateDrawable = doubleBounce
 
+        setter()
+
+        //getting Data from Intent :
+        val artist = intent.getStringExtra("artist")
+        artistName.text=artist.toString()
+
+        //accessing ViewModel :
         artistViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
         artistViewModel.getArtistVM(artist.toString())
         artistViewModel.artistResponse.observe(this, Observer { response ->

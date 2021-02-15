@@ -34,11 +34,14 @@ class AlbumFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_album, container, false)
 
+        //progressBar :
         val progressBar =view.spin_kit as ProgressBar
         val doubleBounce: Sprite = ThreeBounce()
         progressBar.indeterminateDrawable = doubleBounce
+
         //recyclerView
         recyclerView=view.recycle_view_albums
         recyclerAdapter= albumAdapter(requireActivity(),responseList)
@@ -76,10 +79,6 @@ class AlbumFragment : Fragment() {
                 }
             }
         )
-
-
-        //adding data
-
 
         return view
     }

@@ -41,15 +41,14 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        //progressBar :
         val progressBar = findViewById<View>(R.id.spin_kit) as ProgressBar
         val doubleBounce: Sprite = ThreeBounce()
         progressBar.indeterminateDrawable = doubleBounce
 
         setter()
 
-
-        //viewModel
+        //accessing ViewModel :
         val repo= Repository()
         val viewModelFactory= ApiViewModelFactory(repo)
         viewModel= ViewModelProvider(this, viewModelFactory).get(ApiViewModel::class.java)

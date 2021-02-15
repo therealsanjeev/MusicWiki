@@ -32,12 +32,14 @@ class TrackFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_track, container, false)
 
-
+        //progressBar :
         val progressBar =view.spin_kit as ProgressBar
         val doubleBounce: Sprite = ThreeBounce()
         progressBar.indeterminateDrawable = doubleBounce
+
         //recyclerView
         recyclerView=view.recycle_view_tracks
         recyclerAdapter= trackAdapter(requireActivity(),responseList)
@@ -56,8 +58,7 @@ class TrackFragment : Fragment() {
                         requireActivity(), Observer {
                             if (it.isSuccessful) {
                                 for (element in it.body()!!.results.trackmatches.track) {
-                                    val item =
-                                        track(element.name,element.artist,element.image[3].text)
+                                    val item = track(element.name,element.artist,element.image[3].text)
                                     responseList.add(item)
                                 }
                                 recyclerAdapter.notifyDataSetChanged()
