@@ -101,7 +101,7 @@ class AlbumActivity : AppCompatActivity() {
         //recyclerView :
         recyclerView=recycle_view_album_details
         recyclerAdapter= genresAdapter(this, responseList)
-        recyclerView.layoutManager= LinearLayoutManager(applicationContext,LinearLayoutManager.HORIZONTAL,true)
+        recyclerView.layoutManager= LinearLayoutManager(applicationContext,LinearLayoutManager.HORIZONTAL,false)
         recyclerView.adapter=recyclerAdapter
 
         backBtn.setOnClickListener {

@@ -21,9 +21,9 @@ class TrackFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: trackAdapter
-    private lateinit var tagViewModel: ApiViewModel
     private var responseList= ArrayList<track>()
 
+    private lateinit var tagViewModel: ApiViewModel
     private lateinit var trackTag:String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

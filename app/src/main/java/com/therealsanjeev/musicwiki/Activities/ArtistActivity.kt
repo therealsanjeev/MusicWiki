@@ -3,17 +3,24 @@ package com.therealsanjeev.musicwiki.Activities
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.therealsanjeev.musicwiki.R
+import com.therealsanjeev.musicwiki.adpter.albumAdapter
 import com.therealsanjeev.musicwiki.adpter.genresAdapter
+import com.therealsanjeev.musicwiki.adpter.trackAdapter
+import com.therealsanjeev.musicwiki.model.recycleview.album
 import com.therealsanjeev.musicwiki.model.recycleview.genres
+import com.therealsanjeev.musicwiki.model.recycleview.track
 import com.therealsanjeev.musicwiki.views.ApiViewModel
 import kotlinx.android.synthetic.main.activity_album_activity.*
 import kotlinx.android.synthetic.main.activity_artist_activity.*
+import kotlinx.android.synthetic.main.fragment_track.view.*
 
 class ArtistActivity : AppCompatActivity() {
 
@@ -24,10 +31,20 @@ class ArtistActivity : AppCompatActivity() {
     private lateinit var summary: TextView
     private lateinit var imageButton: ImageButton
 
-    //recyclerView:
+    //recyclerView tag:
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: genresAdapter
     private var responseList= ArrayList<genres>()
+
+    //topTracks
+    private lateinit var recyclerViewTopTracks: RecyclerView
+    private lateinit var recyclerAdapterTopTracks: trackAdapter
+    private var responseListTopTracks= ArrayList<track>()
+
+    //topAlbums
+    private lateinit var recyclerViewTopAlbums: RecyclerView
+    private lateinit var recyclerAdapterTopAlbums: albumAdapter
+    private var responseListTopAlbums= ArrayList<album>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +56,9 @@ class ArtistActivity : AppCompatActivity() {
         artistViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
         artistViewModel.getArtistVM(artist.toString())
         artistViewModel.artistResponse.observe(this, Observer { response ->
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 //tags
-                val result=response.body()!!.artist
+                val result = response.body()!!.artist
                 for (element in result.tags.tag) {
                     val item = genres(element.name.toUpperCase())
                     responseList.add(item)
@@ -49,42 +66,68 @@ class ArtistActivity : AppCompatActivity() {
                 recyclerAdapter.notifyDataSetChanged()
 
                 //setting Playcount & followers
-                var playCount=result.stats.playcount.toInt()
-                var folloWer=result.stats.listeners.toInt()
+                var playCount = result.stats.playcount.toInt()
+                var folloWer = result.stats.listeners.toInt()
                 when {
-                    playCount>1000000 -> {
+                    playCount > 1000000 -> {
                         playCount /= 1000000;
-                        playcount.text="$playCount"+"M"
+                        playcount.text = "$playCount" + "M"
                     }
-                    playCount>1000 -> {
+                    playCount > 1000 -> {
                         playCount /= 1000;
-                        playcount.text="$playCount"+"K"
+                        playcount.text = "$playCount" + "K"
                     }
                     else -> {
-                        playcount.text="$playCount"
+                        playcount.text = "$playCount"
                     }
                 }
                 when {
-                    folloWer>1000000 -> {
+                    folloWer > 1000000 -> {
                         folloWer /= 1000000;
-                        followers.text="$folloWer"+"M"
+                        followers.text = "$folloWer" + "M"
                     }
-                    folloWer>1000 -> {
+                    folloWer > 1000 -> {
                         folloWer /= 1000;
-                        followers.text="$folloWer"+"K"
+                        followers.text = "$folloWer" + "K"
                     }
                     else -> {
-                        followers.text="$folloWer"
+                        followers.text = "$folloWer"
                     }
                 }
                 //summary
-                if(result.bio!=null){
-                    summary.text=removeTags(result.bio.summary)
-                }else{
-                    summary.text="No Bio :("
+                if (result.bio != null) {
+                    summary.text = removeTags(result.bio.summary)
+                } else {
+                    summary.text = "No Bio :("
                 }
 
                 //top Tracks:
+                artistViewModel.getTopTracksVM(artist.toString())
+                artistViewModel.topTracksResponse.observe(this, Observer {
+                    if (it.isSuccessful) {
+                        for (element in it.body()!!.toptracks.track) {
+                            val item =
+                                track(element.name, element.artist.name, element.image[3].text)
+                            responseListTopTracks.add(item)
+                        }
+                        recyclerAdapterTopTracks.notifyDataSetChanged()
+                    }
+
+                })
+
+                //top Album:
+                artistViewModel.getTopAlbumVM(artist.toString())
+                artistViewModel.topAlbumResponse.observe(this, Observer {
+                    if (it.isSuccessful) {
+                        for (element in it.body()!!.topalbums.album) {
+                            val item =
+                                album(element.name, element.artist.name, element.image[3].text)
+                            responseListTopAlbums.add(item)
+                        }
+                        recyclerAdapterTopAlbums.notifyDataSetChanged()
+                    }
+
+                })
 
 
             }
@@ -99,11 +142,29 @@ class ArtistActivity : AppCompatActivity() {
         summary=artist_summary
         imageButton=backBtn
 
+
+        //tags
         recyclerView=recyclerview_artist_tag
         recyclerAdapter= genresAdapter(this, responseList)
         recyclerView.layoutManager= LinearLayoutManager(applicationContext,
-            LinearLayoutManager.HORIZONTAL,true)
+            LinearLayoutManager.HORIZONTAL,false)
         recyclerView.adapter=recyclerAdapter
+
+        //topTracks recyclerView
+
+        recyclerViewTopTracks=topTracksRecyclerView
+        recyclerAdapterTopTracks= trackAdapter(this,responseListTopTracks)
+        recyclerViewTopTracks.layoutManager=   LinearLayoutManager(applicationContext,
+            LinearLayoutManager.HORIZONTAL,false)
+        recyclerViewTopTracks.adapter=recyclerAdapterTopTracks
+
+        //topAlbum recyclerView
+
+        recyclerViewTopAlbums=topAlbumsRecyclerView
+        recyclerAdapterTopAlbums= albumAdapter(this,responseListTopAlbums)
+        recyclerViewTopAlbums.layoutManager=   LinearLayoutManager(applicationContext,
+            LinearLayoutManager.HORIZONTAL,false)
+        recyclerViewTopAlbums.adapter=recyclerAdapterTopAlbums
 
         imageButton.setOnClickListener {
             super.onBackPressed()

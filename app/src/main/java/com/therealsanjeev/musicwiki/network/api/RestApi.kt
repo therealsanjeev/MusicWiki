@@ -3,6 +3,8 @@ package com.therealsanjeev.musicwiki.network.api
 import com.therealsanjeev.musicwiki.model.album.albums
 import com.therealsanjeev.musicwiki.model.albumactivity.api.albumactivity
 import com.therealsanjeev.musicwiki.model.artistActivity.artistActivity
+import com.therealsanjeev.musicwiki.model.artistActivity.topalbums.topalbums
+import com.therealsanjeev.musicwiki.model.artistActivity.toptracks.toptracks
 import com.therealsanjeev.musicwiki.model.artists.artists
 import com.therealsanjeev.musicwiki.model.taginfo.tagInfo
 import com.therealsanjeev.musicwiki.model.topgenre.Toptags
@@ -19,6 +21,7 @@ interface RestApi {
     @GET("?method=tag.getinfo&format=json")
     suspend fun getTagInfo(@Query("tag")tag:String,@Query("api_key")api_key: String):Response<tagInfo>
 
+    //Genre Activity :
     @GET("?method=album.search&format=json")
     suspend fun getAlbums(@Query("album")album:String,@Query("api_key")api_key: String):Response<albums>
 
@@ -35,5 +38,15 @@ interface RestApi {
     //Artist Activity :
     @GET("?method=artist.getinfo&format=json")
     suspend fun getArtist(@Query("artist")album:String,@Query("api_key")api_key: String):Response<artistActivity>
+
+    @GET("?method=artist.gettoptracks&format=json")
+    suspend fun getTopTracks(@Query("artist")album:String,@Query("api_key")api_key: String):Response<toptracks>
+
+    @GET("?method=artist.gettopalbums&format=json")
+    suspend fun getTopAlbum(@Query("artist")album:String,@Query("api_key")api_key: String):Response<topalbums>
+
+
+
+
 
 }

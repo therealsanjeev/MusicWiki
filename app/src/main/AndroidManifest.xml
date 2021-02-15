@@ -14,11 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicWiki"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ArtistActivity"></activity>
-        <activity android:name=".Activities.AlbumActivity" />
-        <activity
-            android:name=".Activities.GenreDetailActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.ArtistActivity" android:parentActivityName=".Activities.GenreDetailActivity"></activity>
+        <activity android:name=".Activities.AlbumActivity" android:parentActivityName=".Activities.GenreDetailActivity"/>
+        <activity android:name=".Activities.GenreDetailActivity" android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
