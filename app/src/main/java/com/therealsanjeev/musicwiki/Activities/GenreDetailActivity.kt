@@ -3,6 +3,7 @@ package com.therealsanjeev.musicwiki.Activities
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -43,6 +44,8 @@ class GenreDetailActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     tagSummary.text = response.body()!!.tag.wiki.summary
 
+                } else {
+                    Toast.makeText(this, "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
                 }
             }
         )

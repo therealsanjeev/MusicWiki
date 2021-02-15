@@ -7,10 +7,12 @@ class Repository {
 
     suspend fun getTagInfoRepo(tag:String,api_key: String)=RetrofitInstance.api.getTagInfo(tag,api_key)
 
-    suspend fun getAlbumRepo(album:String,api_key: String)=RetrofitInstance.api.getAlbums(album,api_key)
+    suspend fun getAlbumsRepo(album:String, api_key: String)=RetrofitInstance.api.getAlbums(album,api_key)
 
-    suspend fun getArtistRepo(artist:String,api_key: String)=RetrofitInstance.api.getArtists(artist,api_key)
+    suspend fun getArtistsRepo(artist:String, api_key: String)=RetrofitInstance.api.getArtists(artist,api_key)
 
-    suspend fun getTrackRepo(track:String,api_key: String)=RetrofitInstance.api.getTracks(track,api_key)
+    suspend fun getTracksRepo(track:String, api_key: String)=RetrofitInstance.api.getTracks(track,api_key)
+
+    suspend fun getAlbumRepo(album: String,artist: String,api_key: String)=RetrofitInstance.api.getAlbum(album,artist,api_key)
 
 }

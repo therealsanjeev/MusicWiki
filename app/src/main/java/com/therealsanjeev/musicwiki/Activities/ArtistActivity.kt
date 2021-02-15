@@ -7,6 +7,6 @@ import com.therealsanjeev.musicwiki.R
 class ArtistActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_artist)
+        setContentView(R.layout.activity_artist_activity)
     }
 }

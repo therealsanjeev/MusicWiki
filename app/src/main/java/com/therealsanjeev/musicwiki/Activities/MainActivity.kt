@@ -1,11 +1,21 @@
 package com.therealsanjeev.musicwiki.Activities
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.NetworkCallback
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,10 +23,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.adpter.genresAdapter
 import com.therealsanjeev.musicwiki.model.recycleview.genres
+import com.therealsanjeev.musicwiki.network.connectivity.CheckConnectivity
 import com.therealsanjeev.musicwiki.repo.Repository
 import com.therealsanjeev.musicwiki.views.ApiViewModel
 import com.therealsanjeev.musicwiki.views.ApiViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity(){
 
@@ -79,7 +91,7 @@ class MainActivity : AppCompatActivity(){
                     recyclerAdapter.notifyDataSetChanged()
                     recyclerAdapterTop.notifyDataSetChanged()
                 } else {
-                    Log.d("RESPONSE", "Getting the response errorbody: ${it.errorBody()}")
+                    Toast.makeText(this, "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -108,4 +120,5 @@ class MainActivity : AppCompatActivity(){
 
 
     }
+
 }

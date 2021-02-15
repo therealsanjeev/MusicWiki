@@ -15,7 +15,7 @@
         android:theme="@style/Theme.MusicWiki"
         android:usesCleartextTraffic="true">
         <activity android:name=".Activities.ArtistActivity"></activity>
-        <activity android:name=".Activities.AlbumActiivity" />
+        <activity android:name=".Activities.AlbumActivity" />
         <activity
             android:name=".Activities.GenreDetailActivity"
             android:parentActivityName=".Activities.MainActivity" />

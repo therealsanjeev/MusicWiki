@@ -5,17 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.therealsanjeev.musicwiki.R
-import com.therealsanjeev.musicwiki.adpter.artistAdapter
 import com.therealsanjeev.musicwiki.adpter.trackAdapter
-import com.therealsanjeev.musicwiki.model.recycleview.artist
 import com.therealsanjeev.musicwiki.model.recycleview.track
 import com.therealsanjeev.musicwiki.views.ApiViewModel
-import kotlinx.android.synthetic.main.fragment_artist.view.*
 import kotlinx.android.synthetic.main.fragment_track.view.*
 
 
@@ -48,7 +46,7 @@ class TrackFragment : Fragment() {
                 if(response.isSuccessful) {
 
                     trackTag = response.body()!!.tag.name
-                    tagViewModel.getTrackVM(trackTag)
+                    tagViewModel.getTracksVM(trackTag)
                     tagViewModel.trackResponse.observe(
                         requireActivity(), Observer {
                             if (it.isSuccessful) {
@@ -59,11 +57,15 @@ class TrackFragment : Fragment() {
                                 }
                                 recyclerAdapter.notifyDataSetChanged()
 
+                            }else {
+                                Toast.makeText(getActivity(), "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
                             }
                         }
                     )
 
 
+                }else {
+                    Toast.makeText(getActivity(), "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
                 }
             }
         )

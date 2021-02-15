@@ -1,6 +1,7 @@
 package com.therealsanjeev.musicwiki.network.api
 
 import com.therealsanjeev.musicwiki.model.album.albums
+import com.therealsanjeev.musicwiki.model.albumactivity.api.albumactivity
 import com.therealsanjeev.musicwiki.model.artists.artists
 import com.therealsanjeev.musicwiki.model.taginfo.tagInfo
 import com.therealsanjeev.musicwiki.model.topgenre.Toptags
@@ -25,5 +26,9 @@ interface RestApi {
 
     @GET("?method=track.search&format=json")
     suspend fun getTracks(@Query("track")album:String,@Query("api_key")api_key: String):Response<tracks>
+
+    //Album Activity:
+    @GET("?method=album.getinfo&format=json")
+    suspend fun getAlbum(@Query("album")album:String,@Query("artist")artist:String,@Query("api_key")api_key: String):Response<albumactivity>
 
 }

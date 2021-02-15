@@ -5,21 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.therealsanjeev.musicwiki.Activities.GenreDetailActivity
 import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.adpter.albumAdapter
-import com.therealsanjeev.musicwiki.adpter.genresAdapter
 import com.therealsanjeev.musicwiki.model.recycleview.album
-import com.therealsanjeev.musicwiki.model.recycleview.genres
 import com.therealsanjeev.musicwiki.views.ApiViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_album.*
 import kotlinx.android.synthetic.main.fragment_album.view.*
 
 class AlbumFragment : Fragment() {
@@ -50,8 +46,8 @@ class AlbumFragment : Fragment() {
                 if (response.isSuccessful) {
                     albumTag = response.body()!!.tag.name
                     Log.d("TAG", "onCreateView: $albumTag")
-                    tagViewModel.getAlbumVM(albumTag)
-                    tagViewModel.albumResponse.observe(
+                    tagViewModel.getAlbumsVM(albumTag)
+                    tagViewModel.albumsResponse.observe(
                         requireActivity(), Observer {
                             if (it.isSuccessful) {
                                 for (element in it.body()!!.results.albummatches.album) {
@@ -62,10 +58,14 @@ class AlbumFragment : Fragment() {
                                 }
                                 recyclerAdapter.notifyDataSetChanged()
 
+                            }else {
+                                Toast.makeText(getActivity(), "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
                             }
                         }
                     )
 
+                }else {
+                    Toast.makeText(getActivity(), "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
                 }
             }
         )

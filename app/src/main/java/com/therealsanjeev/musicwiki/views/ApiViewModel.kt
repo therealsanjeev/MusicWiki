@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.therealsanjeev.musicwiki.model.album.albums
+import com.therealsanjeev.musicwiki.model.albumactivity.api.albumactivity
 import com.therealsanjeev.musicwiki.model.artists.artists
 import com.therealsanjeev.musicwiki.model.taginfo.tagInfo
 import com.therealsanjeev.musicwiki.model.topgenre.Toptags
@@ -33,30 +34,42 @@ class ApiViewModel(): ViewModel() {
         }
     }
 
-    val albumResponse:MutableLiveData<Response<albums>> = MutableLiveData()
-    fun getAlbumVM(album:String){
+    val albumsResponse:MutableLiveData<Response<albums>> = MutableLiveData()
+    fun getAlbumsVM(album:String){
         viewModelScope.launch {
-            val response=tagRepo.getAlbumRepo(album, API_KEY)
-            albumResponse.value=response
+            val response=tagRepo.getAlbumsRepo(album, API_KEY)
+            albumsResponse.value=response
         }
 
     }
 
     val artistResponse:MutableLiveData<Response<artists>> = MutableLiveData()
-    fun getArtistVM(artist:String){
+    fun getArtistsVM(artist:String){
         viewModelScope.launch {
-            val response=tagRepo.getArtistRepo(artist, API_KEY)
+            val response=tagRepo.getArtistsRepo(artist, API_KEY)
             artistResponse.value=response
         }
 
     }
 
     val trackResponse:MutableLiveData<Response<tracks>> = MutableLiveData()
-    fun getTrackVM(track:String){
+    fun getTracksVM(track:String){
         viewModelScope.launch {
-            val response=tagRepo.getTrackRepo(track, API_KEY)
+            val response=tagRepo.getTracksRepo(track, API_KEY)
             trackResponse.value=response
         }
 
     }
+
+    //Album Activity:
+    val albumResponse:MutableLiveData<Response<albumactivity>> = MutableLiveData()
+    fun getAlbumVM(album:String,artist: String){
+        viewModelScope.launch {
+            val response=tagRepo.getAlbumRepo(album,artist, API_KEY)
+            albumResponse.value=response
+        }
+
+    }
+
+
 }

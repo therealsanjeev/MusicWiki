@@ -31,7 +31,10 @@ class trackAdapter(private val context: Context,private var tracks:List<track>):
         val response=tracks[position]
         holder.name.text=response.name
         holder.artist.text=response.artist
-        holder.image.load(response.image)
+        holder.image.load(response.image) {
+            crossfade(true)
+            placeholder(R.drawable.imagebg)
+        }
     }
 
     override fun getItemCount(): Int {
