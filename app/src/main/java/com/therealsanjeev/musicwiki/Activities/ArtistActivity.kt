@@ -1,13 +1,17 @@
 package com.therealsanjeev.musicwiki.Activities
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.ThreeBounce
 import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.adpter.genresAdapter
 import com.therealsanjeev.musicwiki.adpter.topAlbumsAdapter
@@ -17,6 +21,8 @@ import com.therealsanjeev.musicwiki.model.recycleview.genres
 import com.therealsanjeev.musicwiki.model.recycleview.track
 import com.therealsanjeev.musicwiki.views.ApiViewModel
 import kotlinx.android.synthetic.main.activity_artist_activity.*
+import kotlinx.android.synthetic.main.activity_artist_activity.spin_kit
+import kotlinx.android.synthetic.main.activity_main.*
 
 class ArtistActivity : AppCompatActivity() {
 
@@ -48,6 +54,9 @@ class ArtistActivity : AppCompatActivity() {
         setter()
         val artist = intent.getStringExtra("artist")
         artistName.text=artist.toString()
+        val progressBar = spin_kit as ProgressBar
+        val doubleBounce: Sprite = ThreeBounce()
+        progressBar.indeterminateDrawable = doubleBounce
 
         artistViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
         artistViewModel.getArtistVM(artist.toString())
@@ -125,7 +134,7 @@ class ArtistActivity : AppCompatActivity() {
 
                 })
 
-
+                progressBar.visibility= View.GONE
             }
         })
 

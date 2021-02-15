@@ -5,12 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.ThreeBounce
 import com.therealsanjeev.musicwiki.Activities.GenreDetailActivity
 import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.adpter.albumAdapter
@@ -33,6 +36,9 @@ class AlbumFragment : Fragment() {
     ): View? {
         val view=inflater.inflate(R.layout.fragment_album, container, false)
 
+        val progressBar =view.spin_kit as ProgressBar
+        val doubleBounce: Sprite = ThreeBounce()
+        progressBar.indeterminateDrawable = doubleBounce
         //recyclerView
         recyclerView=view.recycle_view_albums
         recyclerAdapter= albumAdapter(requireActivity(),responseList)
@@ -57,6 +63,7 @@ class AlbumFragment : Fragment() {
                                     responseList.add(item)
                                 }
                                 recyclerAdapter.notifyDataSetChanged()
+                                progressBar.visibility=View.GONE
 
                             }else {
                                 Toast.makeText(getActivity(), "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()

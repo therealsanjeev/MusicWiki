@@ -3,10 +3,8 @@ package com.therealsanjeev.musicwiki.Activities
 import android.media.Image
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
@@ -19,6 +17,8 @@ import coil.Coil.imageLoader
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.bumptech.glide.Glide
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.ThreeBounce
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.circularreveal.CircularRevealLinearLayout
 import com.therealsanjeev.musicwiki.R
@@ -28,6 +28,7 @@ import com.therealsanjeev.musicwiki.utils.Resource
 import com.therealsanjeev.musicwiki.views.ApiViewModel
 import kotlinx.android.synthetic.main.activity_album_activity.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_album_activity.spin_kit as spin_kit1
 
 class AlbumActivity : AppCompatActivity() {
     private lateinit var albumViewModel: ApiViewModel
@@ -48,7 +49,9 @@ class AlbumActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_activity)
 
-
+        val progressBar = spin_kit as ProgressBar
+        val doubleBounce: Sprite = ThreeBounce()
+        progressBar.indeterminateDrawable = doubleBounce
         setter()
         val album = intent.getStringExtra("album")
         val artist = intent.getStringExtra("artist")
@@ -85,12 +88,16 @@ class AlbumActivity : AppCompatActivity() {
                     wiki_summary.text="No Description Found!!!"
                 }
 
+                progressBar.visibility=View.GONE
             }
         })
 
     }
 
     private fun setter() {
+
+
+
         backBtn=back_btn_album
         albumName=album_name
         albumArtist=artist_name

@@ -52,6 +52,15 @@
 
     </LinearLayout>
 
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/teal_700" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view_top"
         android:layout_width="match_parent"

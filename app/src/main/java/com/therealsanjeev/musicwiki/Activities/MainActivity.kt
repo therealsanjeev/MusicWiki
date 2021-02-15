@@ -1,29 +1,21 @@
 package com.therealsanjeev.musicwiki.Activities
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.ConnectivityManager.NetworkCallback
-import android.net.Network
-import android.net.NetworkCapabilities
-import android.net.NetworkRequest
-import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.*
 import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.adpter.genresAdapter
 import com.therealsanjeev.musicwiki.model.recycleview.genres
-import com.therealsanjeev.musicwiki.network.connectivity.CheckConnectivity
 import com.therealsanjeev.musicwiki.repo.Repository
 import com.therealsanjeev.musicwiki.views.ApiViewModel
 import com.therealsanjeev.musicwiki.views.ApiViewModelFactory
@@ -49,19 +41,12 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnExpend=btn_expend
 
-        //recycleView
-        recyclerView=recycle_view
-        recyclerAdapter= genresAdapter(this, responseList)
-        recyclerView.layoutManager= GridLayoutManager(applicationContext, 3)
-        recyclerView.adapter=recyclerAdapter
+        val progressBar = findViewById<View>(R.id.spin_kit) as ProgressBar
+        val doubleBounce: Sprite = ThreeBounce()
+        progressBar.indeterminateDrawable = doubleBounce
 
-
-        recyclerViewTop10=recycle_view_top
-        recyclerAdapterTop= genresAdapter(this, top10)
-        recyclerViewTop10.layoutManager= GridLayoutManager(applicationContext, 3)
-        recyclerViewTop10.adapter=recyclerAdapterTop
+        setter()
 
 
         //viewModel
@@ -90,8 +75,10 @@ class MainActivity : AppCompatActivity(){
                     }
                     recyclerAdapter.notifyDataSetChanged()
                     recyclerAdapterTop.notifyDataSetChanged()
+                    progressBar.visibility=View.GONE
                 } else {
-                    Toast.makeText(this, "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Make Sure Internet is Connected!", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         )
@@ -118,6 +105,23 @@ class MainActivity : AppCompatActivity(){
 
         }
 
+
+    }
+
+    private fun setter() {
+        btnExpend=btn_expend
+
+        //recycleView
+        recyclerView=recycle_view
+        recyclerAdapter= genresAdapter(this, responseList)
+        recyclerView.layoutManager= GridLayoutManager(applicationContext, 3)
+        recyclerView.adapter=recyclerAdapter
+
+
+        recyclerViewTop10=recycle_view_top
+        recyclerAdapterTop= genresAdapter(this, top10)
+        recyclerViewTop10.layoutManager= GridLayoutManager(applicationContext, 3)
+        recyclerViewTop10.adapter=recyclerAdapterTop
 
     }
 

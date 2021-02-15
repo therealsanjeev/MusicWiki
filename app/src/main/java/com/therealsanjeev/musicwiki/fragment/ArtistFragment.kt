@@ -5,16 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.ThreeBounce
 import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.adpter.artistAdapter
 import com.therealsanjeev.musicwiki.model.recycleview.artist
 import com.therealsanjeev.musicwiki.views.ApiViewModel
+import kotlinx.android.synthetic.main.fragment_album.view.*
 import kotlinx.android.synthetic.main.fragment_artist.view.*
+import kotlinx.android.synthetic.main.fragment_artist.view.spin_kit as spin_kit1
 
 class ArtistFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
@@ -30,6 +35,9 @@ class ArtistFragment : Fragment() {
         // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_artist, container, false)
 
+        val progressBar =view.spin_kit as ProgressBar
+        val doubleBounce: Sprite = ThreeBounce()
+        progressBar.indeterminateDrawable = doubleBounce
         //recyclerView
         recyclerView=view.recycle_view_artists
         recyclerAdapter= artistAdapter(requireActivity(),responseList)
@@ -54,6 +62,7 @@ class ArtistFragment : Fragment() {
                                     responseList.add(item)
                                 }
                                 recyclerAdapter.notifyDataSetChanged()
+                                progressBar.visibility=View.GONE
 
                             }else {
                                 Toast.makeText(getActivity(), "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
