@@ -21,7 +21,6 @@ class topTracksAdapter(private val context: Context, private var tracks: List<tr
         var albumName=view.album_name
         var artist=view.artist_name
         var image=view.album_backGD
-        var albumCardView=view.album_card_view
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): topTracksAdapter.MyViewHolder {
         val itemView= LayoutInflater.from(context).inflate(
@@ -41,14 +40,7 @@ class topTracksAdapter(private val context: Context, private var tracks: List<tr
             crossfade(true)
             placeholder(R.drawable.imagebg)
         }
-        holder.albumCardView.setOnClickListener {
-            val intent = Intent(context, AlbumActivity::class.java).apply {
-                putExtra("album", response.name)
-                putExtra("artist", response.artist)
-                putExtra("image", response.image)
-            }
-            context.startActivity(intent)
-        }
+
 
     }
 
