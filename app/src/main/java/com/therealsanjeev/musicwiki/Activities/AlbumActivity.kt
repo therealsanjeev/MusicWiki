@@ -1,8 +1,10 @@
 package com.therealsanjeev.musicwiki.Activities
 
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +18,13 @@ import coil.Coil
 import coil.Coil.imageLoader
 import coil.imageLoader
 import coil.request.ImageRequest
+import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.circularreveal.CircularRevealLinearLayout
 import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.adpter.genresAdapter
 import com.therealsanjeev.musicwiki.model.recycleview.genres
+import com.therealsanjeev.musicwiki.utils.Resource
 import com.therealsanjeev.musicwiki.views.ApiViewModel
 import kotlinx.android.synthetic.main.activity_album_activity.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,7 +39,7 @@ class AlbumActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: genresAdapter
     private var responseList= ArrayList<genres>()
-    private lateinit var cardView: MaterialCardView
+    private lateinit var imageBg: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +51,9 @@ class AlbumActivity : AppCompatActivity() {
         albumName=album_name
         albumArtist=artist_name
         recyclerView=recycle_view_album_details
-        cardView=album_activity_bg
+        imageBg=album_activity_bg
         wiki_summary=album_summary
+
         backBtn.setOnClickListener {
             super.onBackPressed()
         }
@@ -63,33 +68,46 @@ class AlbumActivity : AppCompatActivity() {
         recyclerView.layoutManager= LinearLayoutManager(applicationContext)
         recyclerView.adapter=recyclerAdapter
 
+
+//        album_summary.text="Yehh humari pawarriii ho rahi h"
+
         albumViewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
         albumViewModel.getAlbumVM(album.toString(),artist.toString())
-        albumViewModel.albumResponse.observe(this, Observer {
-            if (it.isSuccessful) {
-//                val summary = it.body()!!.album.wiki.summary.toString()
-//                Log.d("Summary", "onCreate: $summary")
-//                wiki_summary.text
-//                val image = it.body()!!.album.image[4].text
-//                val request = ImageRequest.Builder(this)
-//                    .data("https://www.example.com/image.jpg")
-//                    .target { drawable ->
-//                        cardView.background = drawable
-//                        Log.d("TAG", "onCreate:$drawable ")
-//                    }
-//                    .build()
-//                val disposable = imageLoader.enqueue(request)
-//
-//                for (element in it.body()!!.album.tags.tag) {
-//                    val item = genres(element.name.toUpperCase())
-//                    responseList.add(item)
-//                }
+        albumViewModel.albumResponse.observe(this, Observer { response ->
+            if (response.isSuccessful){
+                val result=response.body()!!.album
 
-            } else {
-                Toast.makeText(this, "Make Sure Internet is Connected!", Toast.LENGTH_SHORT).show()
+                Glide.with(this.applicationContext)
+                    .load(result.image[4].text)
+                    .error(R.drawable.imagebg)
+                    .thumbnail(
+                        Glide.with(applicationContext)
+                            .load(R.drawable.imagebg)
+                    )
+                    .into(imageBg)
+
+                if (result.wiki!=null){
+                    val desc = result.wiki.summary
+                    val descWithoutTags = removeTags(desc)
+                    wiki_summary.text=descWithoutTags
+                }else{
+                    wiki_summary.text="No Description Found!!!"
+                }
+
             }
         })
 
+    }
+    private fun removeTags(s: String) : String{
+
+        var a = 0
+        for (i in s.indices) {
+            if (s[i] == '<') {
+                a = i
+                break
+            }
+        }
+        return s.substring(0, a)
     }
 
 
