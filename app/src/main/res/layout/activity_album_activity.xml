@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     tools:context=".Activities.AlbumActivity">
     <ImageButton
         android:layout_marginTop="20dp"
@@ -59,8 +61,7 @@
 
     </FrameLayout>
     <LinearLayout
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+
         android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:layout_weight="2"
@@ -72,6 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <ScrollView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

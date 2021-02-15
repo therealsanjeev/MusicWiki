@@ -45,7 +45,7 @@ class ArtistFragment : Fragment() {
 
                     artistTag = response.body()!!.tag.name
                     tagViewModel.getArtistsVM(artistTag)
-                    tagViewModel.artistResponse.observe(
+                    tagViewModel.artistsResponse.observe(
                         requireActivity(), Observer {
                             if (it.isSuccessful) {
                                 for (element in it.body()!!.results.artistmatches.artist) {

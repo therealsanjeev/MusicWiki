@@ -15,4 +15,6 @@ class Repository {
 
     suspend fun getAlbumRepo(album: String,artist: String,api_key: String)=RetrofitInstance.api.getAlbum(album,artist,api_key)
 
+    suspend fun getArtistRepo(artist:String, api_key: String)=RetrofitInstance.api.getArtist(artist,api_key)
+
 }

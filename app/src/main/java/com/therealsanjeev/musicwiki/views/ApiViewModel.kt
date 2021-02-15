@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.therealsanjeev.musicwiki.model.album.albums
 import com.therealsanjeev.musicwiki.model.albumactivity.api.albumactivity
+import com.therealsanjeev.musicwiki.model.artistActivity.artistActivity
 import com.therealsanjeev.musicwiki.model.artists.artists
 import com.therealsanjeev.musicwiki.model.taginfo.tagInfo
 import com.therealsanjeev.musicwiki.model.topgenre.Toptags
@@ -43,11 +44,11 @@ class ApiViewModel(): ViewModel() {
 
     }
 
-    val artistResponse:MutableLiveData<Response<artists>> = MutableLiveData()
+    val artistsResponse:MutableLiveData<Response<artists>> = MutableLiveData()
     fun getArtistsVM(artist:String){
         viewModelScope.launch {
             val response=tagRepo.getArtistsRepo(artist, API_KEY)
-            artistResponse.value=response
+            artistsResponse.value=response
         }
 
     }
@@ -67,6 +68,15 @@ class ApiViewModel(): ViewModel() {
         viewModelScope.launch {
             val response=tagRepo.getAlbumRepo(album,artist, API_KEY)
             albumResponse.value=response
+        }
+
+    }
+
+    val artistResponse:MutableLiveData<Response<artistActivity>> = MutableLiveData()
+    fun getArtistVM(artist:String){
+        viewModelScope.launch {
+            val response=tagRepo.getArtistRepo(artist, API_KEY)
+            artistResponse.value=response
         }
 
     }
