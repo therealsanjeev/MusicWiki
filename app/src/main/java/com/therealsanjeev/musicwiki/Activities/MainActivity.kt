@@ -16,9 +16,7 @@ import com.github.ybq.android.spinkit.style.*
 import com.therealsanjeev.musicwiki.R
 import com.therealsanjeev.musicwiki.adpter.genresAdapter
 import com.therealsanjeev.musicwiki.model.recycleview.genres
-import com.therealsanjeev.musicwiki.repo.Repository
 import com.therealsanjeev.musicwiki.views.ApiViewModel
-import com.therealsanjeev.musicwiki.views.ApiViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -49,9 +47,7 @@ class MainActivity : AppCompatActivity(){
         setter()
 
         //accessing ViewModel :
-        val repo= Repository()
-        val viewModelFactory= ApiViewModelFactory(repo)
-        viewModel= ViewModelProvider(this, viewModelFactory).get(ApiViewModel::class.java)
+        viewModel= ViewModelProvider(this).get(ApiViewModel::class.java)
 
         val method="tag.getTopTags"
         viewModel.getDataAllVM(method)
